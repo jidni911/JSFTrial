@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>Edit Employee</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
+    </head>
+    <body>
+        <div class="container mt-5 text-center">
+            <h1 class="mb-4">Edit Employee</h1>
+            <f:view>
+                <h:form>
+                    <h:outputLabel for="id" value="Employee ID: " />
+                    
+                    
+                    <h:inputText id="id" value="#{selectedEmployee.id}" readonly="true" />
+                    <br/><br/>
+                    
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <h:inputText id="firstName" value="#{selectedEmployee.firstName}" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <h:inputText id="lastName" value="#{selectedEmployee.lastName}" class="form-control" />
+                        </div>
+                    </div>
+                    
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email</label>
+                            <h:inputText id="email" value="#{selectedEmployee.email}" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="hireDate" class="form-label">Hire Date</label>
+                            <h:inputText id="hireDate" value="#{selectedEmployee.stringDate}" class="form-control"  />
+                        </div>
+                    </div>
+                    
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="salary" class="form-label">Salary</label>
+                            <h:inputText id="salary" value="#{selectedEmployee.salary}" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="departmentId" class="form-label">Department ID</label>
+                            <h:inputText id="departmentId" value="#{selectedEmployee.departmentId}" class="form-control" />
+                        </div>
+                    </div>
+                    
+                    
+
+                    <div class="d-flex justify-content-end">
+                        <h:commandButton value="Save" action="#{employeeController.updateEmployee(selectedEmployee) }" class="btn btn-primary me-2" />
+                        <h:commandButton value="Reset" type="reset" class="btn btn-secondary" />
+                    </div>
+                    
+                    
+                </h:form>
+            </f:view>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </body>
+</html>
