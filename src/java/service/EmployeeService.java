@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -33,15 +35,10 @@ import javax.faces.context.FacesContext;
 public class EmployeeService {
 
     public EmployeeService() {
-        try {
-            sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        } catch (Exception e) {
-        }
-
     }
 
     ArrayList employees;
-    private Map<String, Object> sessionMap;//= FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+    private Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
     Connection connection;
 
     public ArrayList getEmployees() {
@@ -110,7 +107,6 @@ public class EmployeeService {
             preparedStatement.setDate(4, Date.valueOf(employee.getHireDate()));
             preparedStatement.setFloat(5, employee.getSalary());
             preparedStatement.setInt(6, employee.getDepartmentId());
-            
 
             boolean b = preparedStatement.executeUpdate() > 0;
             preparedStatement.close();
@@ -132,7 +128,8 @@ public class EmployeeService {
      * @param id The ID of the employee.
      * @return The Employee object, or null if not found.
      */
-    public Employee getEmployeeById(int id) {
+    public void getEmployeeById(int id) {
+        System.out.println("this is from service, getbyid, value = " + id);
         String query = "SELECT * FROM employee WHERE employee_id = ?";
         try {
             connection = DBUtills.getConnection();
@@ -144,14 +141,27 @@ public class EmployeeService {
 //            preparedStatement.close();
 //            connection.close();
             if (resultSet.next()) {
-//                
-                sessionMap.put("selectedEmployee", mapToEmployee(resultSet));
-                return mapToEmployee(resultSet);
+                Employee emp = mapToEmployee(resultSet);
+                System.out.println(emp);
+
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                if (facesContext != null) {
+                    sessionMap = facesContext.getExternalContext().getSessionMap();
+                    if (sessionMap != null) {
+                        sessionMap.put("selectedEmployee", emp);
+                    } else {
+                        System.out.println("Session map is null.");
+                    }
+                } else {
+                    System.out.println("FacesContext is null.");
+                }
+
+//                sessionMap.put("selectedEmployee", emp);
+                System.out.println("mapped");
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Replace with logging in production
+            System.out.println(e.getCause().toString()); // Replace with logging in production
         }
-        return null;
     }
 
     /**
@@ -177,7 +187,7 @@ public class EmployeeService {
         } catch (SQLException e) {
             e.printStackTrace(); // Replace with logging in production
         }
-        
+
 //        if(employees.size()==0){
 //            List<Employee> randomEmployees = getRamdomEmployees();
 //            for (Employee randomEmployee : randomEmployees) {
@@ -217,7 +227,7 @@ public class EmployeeService {
             preparedStatement.setFloat(5, employee.getSalary());
             preparedStatement.setInt(6, employee.getDepartmentId());
             preparedStatement.setInt(7, employee.getId());
-            
+
             boolean b = preparedStatement.executeUpdate() > 0;
             preparedStatement.close();
             connection.close();
@@ -241,7 +251,7 @@ public class EmployeeService {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setInt(1, id);
-            
+
             boolean b = preparedStatement.executeUpdate() > 0;
             preparedStatement.close();
             connection.close();
@@ -299,6 +309,19 @@ public class EmployeeService {
 
         }
         return employeeList;
+    }
+
+    public void dropTable() {
+        String query = " Drop table employee;";
+        try {
+            connection = DBUtills.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.execute();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

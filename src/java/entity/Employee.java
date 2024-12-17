@@ -5,14 +5,16 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author JidniVai
  */
-public class Employee {
+public class Employee implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     //CREATE TABLE employee (
 //    employee_id INT PRIMARY KEY,
 //    first_name VARCHAR(100),
@@ -114,5 +116,4 @@ public class Employee {
         this.hireDate = LocalDate.parse(stringDate);
     }
 
-    
 }

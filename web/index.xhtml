@@ -10,92 +10,139 @@
     </h:head>
     <h:body>
         <h1 class = "text-center" >All Employees</h1>
-        <div class="p-5">
-            <f:view>
-                <h:form>
+        <div class="row">
+            <div class="col-8">
+                <div class="p-5">
+                    <f:view>
+                        <h:form>
 
-                    <h:dataTable value="#{employeeController.employeeList}" var="item" border="1" styleClass="text-center table table-striped table-hover">
+                            <h:dataTable value="#{employeeController.employeeList}" var="item" border="1" styleClass="text-center table table-striped table-hover">
 
-                        <!-- Table Header -->
-                        <h:column>
-                            <f:facet name="header">ID</f:facet>
-                                #{item.id}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">First Name</f:facet>
-                                #{item.firstName}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Last Name</f:facet>
-                                #{item.lastName}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Email</f:facet>
-                                #{item.email}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Hire Date</f:facet>
-                                #{item.hireDate}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Salary</f:facet>
-                                #{item.salary}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Department ID</f:facet>
-                                #{item.departmentId}
-                        </h:column>
+                                <!-- Table Header -->
+                                <h:column>
+                                    <f:facet name="header">ID</f:facet>
+                                        #{item.id}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">First Name</f:facet>
+                                        #{item.firstName}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Last Name</f:facet>
+                                        #{item.lastName}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Email</f:facet>
+                                        #{item.email}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Hire Date</f:facet>
+                                        #{item.hireDate}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Salary</f:facet>
+                                        #{item.salary}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Department ID</f:facet>
+                                        #{item.departmentId}
+                                </h:column>
 
-                        <!-- Action Buttons -->
-                        <h:column >
-                            <f:facet name="header">Actions</f:facet>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-outline-primary rounded-5" data-bs-toggle="modal" data-bs-target="#employeeEditModal">
-                                    Edit #{item.id}
-                                </button>
-                                <h:commandLink action="#{employeeController.editEmployee(item.id)}" value="Edit" class="btn btn-outline-warning rounded-5" /> 
-                                <h:commandLink action="#{employeeController.editEmployee2(item.id)}" value="Edit2" class="btn btn-outline-warning rounded-5" />
+                                <!-- Action Buttons -->
+                                <h:column >
+                                    <f:facet name="header">Actions</f:facet>
+                                    <div class="btn-group">
+                                        <h:commandLink action="#{employeeController.editEmployee2(item.id)}" value="Load" class="btn btn-outline-warning rounded-5" />
+                                        <h:commandLink action="#{employeeController.editEmployee(item.id)}" value="Edit" class="btn btn-outline-warning rounded-5" /> 
+                                    </div>
 
-                                <h:commandLink action="#{employeeController.deleteEmployee(item.id)}" value="Delete" class="btn btn-outline-danger rounded-5" />
+                                </h:column>
+
+                            </h:dataTable>
+
+                            <div class = "text-center"> 
+                                <h:commandButton value="Add New Employee" action="#{employeeController.add()}" class = "btn btn-info"/>
+                                <h:commandButton value="Destroy All record" action="#{employeeController.destroy()}" class = "btn btn-danger"/>
+
+                            </div>
+                            <div class = "text-end  fixed-bottom"> 
+                                <h:commandButton value="Add Random Employee" action="#{employeeController.addRandomValues()}" class = "btn btn-info"/>
+                                <br/>
+                                sessionMap : ${selectedEmployee}
+                            </div>
+                            <!-- Add New Employee Button -->
+
+
+                        </h:form>
+                    </f:view>
+                </div>
+
+            </div>
+            <div class="col-4">
+
+                <div class="container mt-5 text-center sticky-top">
+                    <h1 class="mb-4">Loaded Employee</h1>
+                    <f:view>
+                        <h:form>
+                            <h:outputLabel for="id" value="Employee ID: " />
+
+
+                            <h:inputText id="id" value="#{selectedEmployee.id}" readonly="true" />
+                            <br/><br/>
+
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="firstName" class="form-label">First Name</label>
+                                    <h:inputText id="firstName" value="#{selectedEmployee.firstName}" class="form-control" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lastName" class="form-label">Last Name</label>
+                                    <h:inputText id="lastName" value="#{selectedEmployee.lastName}" class="form-control" />
+                                </div>
                             </div>
 
-                        </h:column>
 
-                    </h:dataTable>
-
-                    <div class = "text-center"> 
-                        <h:commandButton value="Add New Employee" action="#{employeeController.add()}" class = "btn btn-info"/>
-                    </div>
-                    <div class = "text-end  fixed-bottom"> 
-                        <h:commandButton value="Add Random Employee" action="#{employeeController.addRandomValues()}" class = "btn btn-info"/>
-                    </div>
-                    <!-- Add New Employee Button -->
-
-
-                </h:form>
-            </f:view>
-        </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <h:inputText id="email" value="#{selectedEmployee.email}" class="form-control" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="hireDate" class="form-label">Hire Date</label>
+                                    <h:inputText id="hireDate" value="#{selectedEmployee.stringDate}" class="form-control"  />
+                                </div>
+                            </div>
 
 
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="salary" class="form-label">Salary</label>
+                                    <h:inputText id="salary" value="#{selectedEmployee.salary}" class="form-control" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="departmentId" class="form-label">Department ID</label>
+                                    <h:inputText id="departmentId" value="#{selectedEmployee.departmentId}" class="form-control" />
+                                </div>
+                            </div>
 
-        <!-- Modal -->
-        <div class="modal fade " id="employeeEditModal" tabindex="-1" aria-labelledby="employeeEditModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="employeeEditModalLabel">Edit Employee</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        #{selectedEmployee.id}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+
+
+                            <div class="d-flex justify-content-end">
+                                <h:commandButton value="Direct Save" action="#{employeeController.updateEmployee(selectedEmployee) }" class="btn btn-primary me-2" />
+
+                                <h:commandLink action="#{employeeController.deleteEmployee(selectedEmployee.id)}" value="Delete" class="btn btn-outline-danger rounded-5" />
+
+                                <h:commandButton value="Reset" type="reset" class="btn btn-secondary" />
+                            </div>
+
+
+                        </h:form>
+                    </f:view>
                 </div>
             </div>
         </div>
+
 
 
 

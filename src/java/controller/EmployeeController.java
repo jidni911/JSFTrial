@@ -115,14 +115,17 @@ public class EmployeeController {
      * @param id The ID of the employee to load.
      * @return Navigation outcome.
      */
-    public String editEmployee(int id) {
-        employee = employeeService.getEmployeeById(id);
-        return "editEmployee.xhtml?faces-redirect=false"; // Navigate to the edit employee page
+    public String editEmployee(Integer id) {
+        if (id == null) {
+            id = 1;
+        };
+         employeeService.getEmployeeById(id);
+        return "editEmployee.xhtml?faces-redirect=true"; // Navigate to the edit employee page
     }
 
     public String editEmployee2(int id) {
-        employee = employeeService.getEmployeeById(id);
-        return "index.xhtml#employeeEditModal?faces-redirect=false"; // Navigate to the edit employee page
+        employeeService.getEmployeeById(id);
+        return "index.xhtml?faces-redirect=true"; // Navigate to the edit employee page
     }
 
     // Getters and Setters
@@ -146,10 +149,16 @@ public class EmployeeController {
     }
 
     public String addRandomValues() {
+        employeeService.init();
         List<Employee> employees = employeeService.getRamdomEmployees();
         for (Employee employee1 : employees) {
             employeeService.createEmployee(employee1);
         }
+        return "index.xhtml?faces-redirect=true";
+    }
+
+    public String destroy() {
+        employeeService.dropTable();
         return "index.xhtml?faces-redirect=true";
     }
 
