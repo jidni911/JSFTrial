@@ -97,19 +97,19 @@ public class EmployeeService {
      */
     public boolean createEmployee(Employee employee) {
         PreparedStatement preparedStatement = null;
-        String query = "INSERT INTO employee ( employee_id, first_name, last_name, email, hire_date, salary, department_id) "
-                + "VALUES ( ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO employee ( first_name, last_name, email, hire_date, salary, department_id) "
+                + "VALUES (  ?, ?, ?, ?, ?, ?)";
         try {
             connection = DBUtills.getConnection();
             preparedStatement = connection.prepareStatement(query);
 
-            preparedStatement.setInt(1, employee.getId());
-            preparedStatement.setString(2, employee.getFirstName());
-            preparedStatement.setString(3, employee.getLastName());
-            preparedStatement.setString(4, employee.getEmail());
-            preparedStatement.setDate(5, Date.valueOf(employee.getHireDate()));
-            preparedStatement.setFloat(6, employee.getSalary());
-            preparedStatement.setInt(7, employee.getDepartmentId());
+//            preparedStatement.setInt(1, employee.getId());
+            preparedStatement.setString(1, employee.getFirstName());
+            preparedStatement.setString(2, employee.getLastName());
+            preparedStatement.setString(3, employee.getEmail());
+            preparedStatement.setDate(4, Date.valueOf(employee.getHireDate()));
+            preparedStatement.setFloat(5, employee.getSalary());
+            preparedStatement.setInt(6, employee.getDepartmentId());
             
 
             boolean b = preparedStatement.executeUpdate() > 0;

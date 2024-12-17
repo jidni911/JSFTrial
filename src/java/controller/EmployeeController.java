@@ -117,7 +117,12 @@ public class EmployeeController {
      */
     public String editEmployee(int id) {
         employee = employeeService.getEmployeeById(id);
-        return "editEmployee.xhtml?faces-redirect=true"; // Navigate to the edit employee page
+        return "editEmployee.xhtml?faces-redirect=false"; // Navigate to the edit employee page
+    }
+
+    public String editEmployee2(int id) {
+        employee = employeeService.getEmployeeById(id);
+        return "index.xhtml#employeeEditModal?faces-redirect=false"; // Navigate to the edit employee page
     }
 
     // Getters and Setters
@@ -138,6 +143,14 @@ public class EmployeeController {
 
     public void setEmployeeList(List<Employee> employeeList) {
         this.employeeList = employeeList;
+    }
+
+    public String addRandomValues() {
+        List<Employee> employees = employeeService.getRamdomEmployees();
+        for (Employee employee1 : employees) {
+            employeeService.createEmployee(employee1);
+        }
+        return "index.xhtml?faces-redirect=true";
     }
 
     public static void main(String[] args) {
