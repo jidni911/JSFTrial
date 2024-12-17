@@ -66,12 +66,16 @@ public class EmployeeController {
             return "error?faces-redirect=true"; // Navigate to an error page
         }
     }
-    
+
     public String add() {
         employee = new Employee();
         int s = employeeList.size();
-        Employee last = employeeList.get(s-1);
-        employee.setId(last.getId()+1);
+        if (s == 0) {
+            employee.setId(1);
+        } else {
+            Employee last = employeeList.get(s - 1);
+            employee.setId(last.getId() + 1);
+        }
         return "createEmployee.xhtml";
     }
 
